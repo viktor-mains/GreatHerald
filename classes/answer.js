@@ -69,7 +69,7 @@ exports.Answer = function (data) {
         post.embed(``, [
             [`Becoming the Herald`, `http://becoming-the-herald-comic.tumblr.com/2Intro \nHow did Viktor become the Machine Herald and is he really that fearful villain everyone are talking about?`, false],
             [`The Rift`, `http://the-rift-comics.tumblr.com/post/141545049953/the-rift-league-of-legends-fancomics-start \nWhat's the worst that could happen, when you force Viktor and Ekko to face an upcoming Apocalypse together?`, false],
-            [`Viktor vs Jayce`, `http://www.league-art.com/viktorjayce.htm \nPortraining the canon Jayce lore events`, false]]);
+            [`Viktor vs Jayce`, `https://funnyjunk.com/channel/lol-channel/Viktor+and+jayce+comic/oNvMLbA/ \nPortraining the canon Jayce lore events`, false]]);
     };
 
 
