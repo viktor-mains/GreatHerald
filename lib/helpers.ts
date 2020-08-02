@@ -135,28 +135,43 @@ export const splitArrayByObjectKey = (
 		return reducer;
 	}, {});
 
-export const toDDHHMMSS = (joinedAt: Date | null): string => {
-	if (!joinedAt) return 'unknown duration';
+// These overloads ensure that you have type safety. If you pass a Date to this, you will ALWAYS get a string back, but if you pass null, you will ONLY get a null back
+// Prevents situations like toDDHHMMSS(new Date()) having to be nullchecked.
+export function toDDHHMMSS(joinedAt: null): null;
+export function toDDHHMMSS(joinedAt: Date | null): string | null;
+export function toDDHHMMSS(joinedDat: Date, now?: Date): string;
+export function toDDHHMMSS(
+	joinedAt: Date | null,
+	now: Date = new Date(),
+): string | null {
+	if (joinedAt === null) {
+		return null;
+	}
+
 	const start = moment(joinedAt);
-	const end = moment();
+	const end = moment(now);
 	const diff = moment.duration(end.diff(start));
 
-	return `${
-		moment.duration(diff).years() ? moment.duration(diff).years() + 'y ' : ''
-	}${
-		moment.duration(diff).months() ? moment.duration(diff).months() + 'm ' : ''
-	}${moment.duration(diff).days() ? moment.duration(diff).days() + 'd ' : ''}${
-		moment.duration(diff).hours() ? moment.duration(diff).hours() + 'h ' : ''
-	}${
-		moment.duration(diff).minutes()
-			? moment.duration(diff).minutes() + 'm '
-			: ''
-	}${
-		moment.duration(diff).seconds()
-			? moment.duration(diff).seconds() + 's '
-			: ''
-	}`;
-};
+	const times = {
+		y: diff.years(),
+		mo: diff.months(),
+		d: diff.days(),
+		h: diff.hours(),
+		m: diff.minutes(),
+		s: diff.seconds(),
+	};
+
+	const items = Object.keys(times).reduce((arr, key) => {
+		const val = times[key];
+		if (val === 0) {
+			return arr;
+		}
+
+		return [...arr, [val, key].join('')];
+	}, []);
+
+	return [...items, ''].join(' ');
+}
 
 export const toMMSS = (miliseconds: number): string => {
 	const mili = 1000;
